@@ -13,7 +13,9 @@ data class Week(
         val fri: Day,
         val sat: Day,
         val sun: Day
-)
+) {
+    val days = arrayOf(mon, tue, wed, thu, fri, sat, sun)
+}
 
 /**
  * Class representing a day's schedule
@@ -40,12 +42,8 @@ data class Day(val name: Weekday, val date: SimpleDate, val events: Array<Event>
 
         return true
     }
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + date.hashCode()
-        result = 31 * result + Arrays.hashCode(events)
-        return result
-    }
+    override fun hashCode(): Int =
+            31 * (31 * name.hashCode()+ date.hashCode()) + Arrays.hashCode(events)
 }
 
 /**
@@ -119,12 +117,12 @@ data class SimpleTime(val hours: Int, val minutes: Int) {
     override fun toString() = "$hours:${minutes.toString().padStart(2, '0')}"
 }
 
-enum class Weekday(val dayname: String) {
-    MONDAY   ("Maandag"),
-    TUESDAY  ("Dinsdag"),
-    WEDNESDAY("Woensdag"),
-    THURSDAY ("Donderdag"),
-    FRIDAY   ("Vrijdag"),
-    SATURDAY ("Zaterdag"),
-    SUNDAY   ("Zondag")
+enum class Weekday(val dayname: String, val short: String) {
+    MONDAY    ("Maandag",   "mon"),
+    TUESDAY   ("Dinsdag",   "tue"),
+    WEDNESDAY ("Woensdag",  "wed"),
+    THURSDAY  ("Donderdag", "thu"),
+    FRIDAY    ("Vrijdag",   "fri"),
+    SATURDAY  ("Zaterdag",  "sat"),
+    SUNDAY    ("Zondag",    "sun")
 }

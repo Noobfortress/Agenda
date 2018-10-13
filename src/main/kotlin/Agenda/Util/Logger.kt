@@ -2,6 +2,7 @@
 package Agenda.Util
 
 object Logger {
+    var minLogLevel: LogLevel = LogLevel.INFO
 
     fun debug(message: String) = print(message, LogLevel.DEBUG)
     fun info(message: String)  = print(message, LogLevel.INFO)
@@ -10,7 +11,8 @@ object Logger {
 
 
     private fun print(message: String, level: LogLevel) {
-        println("${level.color}[Logger/$level]: $message${AnsiColor.RESET}")
+        if(level.ordinal >= minLogLevel.ordinal)
+            println("${level.color}[Logger/$level]: $message${AnsiColor.RESET}")
     }
 }
 
